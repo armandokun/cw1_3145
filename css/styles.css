@@ -1,0 +1,32 @@
+.container {
+    display: grid;
+    grid-template-columns: 0.5fr 2fr;
+    grid-template-rows: 0.5fr 2fr;
+    grid-gap: 10px;
+    align-items: center;
+}
+
+header {
+    grid-column: 1/3;
+    grid-row: 1/1;
+    text-align: center;
+    padding: 2px;
+}
+
+aside {
+    grid-column: 1/1;
+    grid-row: 2/3;
+}
+main {
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+#headerLogo {
+    width: 35px;
+    float: left;
+}
+
+#button-left-alignment {
+    float: right;
+}
