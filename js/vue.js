@@ -43,11 +43,11 @@ var filterApp = new Vue({
     selectedLocation: []
   },
   computed: {
-    topics: function() {
+    topics: function () {
       // return an array of all the topics
       return [...new Set(this.courses.map(x => x.topic))];
     },
-    locations: function() {
+    locations: function () {
       return [...new Set(this.courses.map(x => x.location))];
     }
   }
@@ -60,16 +60,16 @@ var courseApp = new Vue({
     courses: courses
   },
   methods: {
-    reset: function() {
+    reset: function () {
       filterApp.selectedTopic = [];
       filterApp.selectedLocation = [];
     }
   },
   computed: {
-    filteredCourses: function() {
+    filteredCourses: function () {
       var topics = filterApp.selectedTopic,
         locations = filterApp.selectedLocation;
-      return this.courses.filter(function(course) {
+      return this.courses.filter(function (course) {
         var topicMatch = false,
           locationMatch = false;
         if (topics.length > 0) {
@@ -96,11 +96,12 @@ var courseApp = new Vue({
 var signupApp = new Vue({
   el: "#signup",
   data: {
+    userType: "user",
     email: "",
     password: ""
   },
   methods: {
-    onSubmit: function() {
+    onSubmit: function () {
       // check if the email already exists
       var users = "";
       var newEmail = this.email;
@@ -110,24 +111,24 @@ var signupApp = new Vue({
       }
       if (users) {
         if (
-          users.some(function(user) {
+          users.some(function (user) {
             return user.email === newEmail;
           })
         ) {
           alert("Email already exists!");
           return;
         }
-        users.push({ email: newEmail, password: this.password });
+        users.push({ type: this.userType, email: newEmail, password: this.password });
         localStorage.setItem("users", JSON.stringify(users));
       } else {
-        users = [{ email: newEmail, password: this.password }];
+        users = [{ type: this.userType, email: newEmail, password: this.password }];
         localStorage.setItem("users", JSON.stringify(users));
       }
     }
   }
 });
 
-//Log In Instance
+//Log In Instance - finished
 var logInApp = new Vue({
   el: "#login",
   data: {
@@ -135,7 +136,7 @@ var logInApp = new Vue({
     password: ""
   },
   methods: {
-    onSubmit: function() {
+    onSubmit: function () {
       // check if the email already exists
       var users = "";
       var existingEmail = this.email;
@@ -146,7 +147,7 @@ var logInApp = new Vue({
       }
       if (users) {
         if (
-          users.some(function(user) {
+          users.some(function (user) {
             return user.email === existingEmail && user.password === existingPassword;
           })
         ) {

@@ -23,6 +23,17 @@
                     <a class="close" href="#">&times;</a>
                     <div class="content">
                         <form id="signup">
+                                        <p>type: </p>
+                                        <div>
+                                          <input id="user" type="radio" name="userType" value="user" v-model="userType"/>
+                                          <label for="user">User</label>
+                                        </div>
+                                        
+                                        <div>
+                                          <input id="provider" type="radio" name="userType" value="provider" v-model="userType"/>
+                                          <label for="provider">Provider</label>
+                                        </div>
+                            <br><br>
                             <label for="email">email: </label>
                             <input required type="email" id="email" v-model='email'>
                             <br><br>
