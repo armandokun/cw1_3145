@@ -27,7 +27,7 @@
                     </option>
                 </select>
                 <p>Selected topics: {{selectedTopic}}</p>
-                <!-- <br> -->
+                <br>
                 <select multiple v-model='selectedLocation'>
                     <option v-for="location in locations">{{location}}</option>
                 </select>
@@ -36,8 +36,17 @@
 
         </aside>
         <main>
-            <div id="course-loop"></div>
-        </main>
+            <div id="course-loop">
+                <button v-on:click='reset'>reset</button>
+                <div id="courseList">
+                    <h1>Course list</h1>
+                    <div v-for="course in filteredCourses" class="course">
+                        <li v-for='(value, name) in course'>{{name}}: {{value}}</li>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
     </div>
 </body>
 

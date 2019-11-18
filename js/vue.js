@@ -34,9 +34,7 @@ new Vue({
     el: '#header-template'
 })
 
-
-
-
+//Filter Instance
 var filterApp = new Vue({
     el: '#filter',
     data: {
@@ -54,20 +52,12 @@ var filterApp = new Vue({
     }
 })
 
+//Course Instance
 var courseApp = new Vue({
     el: '#course-loop',
     data: {
             courses: courses
     },
-    template: `
-    <div id="courseList">
-    <button v-on:click='reset'>Reset</button>
-    <h1>Course list</h1>
-    <div v-for="course in filteredCourses" class="course">
-        <li v-for='(value, name) in course'>{{name}}: {{value}}</li>
-    </div>
-    </div>
-    `,
     methods: {
         reset: function () {
             this.selectedTopic = [];
@@ -76,7 +66,7 @@ var courseApp = new Vue({
     },
     computed: {
         filteredCourses: function () {
-            var topics = this.selectedTopic, locations = this.selectedLocation;
+            var topics = filterApp.selectedTopic, locations = filterApp.selectedLocation;
             return this.courses.filter(function (course) {
                 var topicMatch = false, locationMatch = false;
                 if (topics.length > 0) {
