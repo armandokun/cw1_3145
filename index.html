@@ -18,9 +18,25 @@
                 <page-header></page-header>
             </div>
         </header>
-        <aside></aside>
+        <aside>
+            <div id="filter">
+                <h1>Filters</h1>
+                <select multiple v-model='selectedTopic'>
+                    <option v-for='topic in topics'>
+                        {{topic}}
+                    </option>
+                </select>
+                <p>Selected topics: {{selectedTopic}}</p>
+                <!-- <br> -->
+                <select multiple v-model='selectedLocation'>
+                    <option v-for="location in locations">{{location}}</option>
+                </select>
+                <p>Selected location: {{selectedLocation}}</p>
+            </div>
+
+        </aside>
         <main>
-            <course-post></course-post>
+            <div id="course-loop"></div>
         </main>
     </div>
 </body>
