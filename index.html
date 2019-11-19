@@ -73,19 +73,19 @@
                 </select>
                 <p>Selected topics: {{selectedTopic}}</p>
                 <br>
-                <select multiple v-model='selectedLocation'>
-                    <option v-for="location in locations">{{location}}</option>
+                <select multiple v-model='selectedPrice'>
+                    <option v-for="price in prices">{{price}}</option>
                 </select>
-                <p>Selected location: {{selectedLocation}}</p>
+                <p>Selected price: {{selectedPrice}}</p>
             </div>
-
         </aside>
         <main>
             <div id="course-loop">
                 <button v-on:click='reset'>reset</button>
+                <input placeholder="Search" type="text" v-model="search">
                 <div id="courseList">
                     <h1>Course list</h1>
-                    <div v-for="course in filteredCourses" class="course">
+                    <div v-for="course in filteredList" class="course">
                         <li v-for='(value, name) in course'>{{name}}: {{value}}</li>
                     </div>
                 </div>

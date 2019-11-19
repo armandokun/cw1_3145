@@ -1,4 +1,3 @@
-//filter, header and course
 
 //array for training
 var courses = [
@@ -19,12 +18,16 @@ Vue.component("page-header", {
   template: `
     <div class="page-header-template">
     <img src="./img/header-logo.png" alt='Logo in the Header' id="headerLogo">
-    <input placeholder="Search" type="text">
     <div id='button-left-alignment'>
-    <a class="button" href="#popup2" v-if="!isOn">Log In</a>
-    <a class="button" href="#popup1" v-if="!isOn">Sign Up</a>
+    <div v-if=!isOn>
+    <a class="button" href="#popup2">Log In</a>
+    <a class="button" href="#popup1">Sign Up</a>
+    </div>
+    <div v-else>
+    <p>email: {{ userInfo.email }}</p>
     <button v-if="isOn" @click="logOut">Log Out</button>
     <button v-if="isOn">Shopping Cart</button>
+    </div>
     </div>
     </div>
     `,
@@ -41,7 +44,7 @@ Vue.component("page-header", {
             var index = users.findIndex(obj => obj.on === true);
             users[index].on = false;
             localStorage.setItem("users", JSON.stringify(users));
-            window.location.href="/index.html"
+            window.location.href="/index.html";
             return;
       }
     }
@@ -58,6 +61,11 @@ Vue.component("page-header", {
           return true;
         }
       }
+    },
+    userInfo: function() {
+      users = JSON.parse(localStorage.getItem("users"));
+      var index = users.findIndex(obj => obj.on === true);
+      return users[index];
     }
   }
 }
@@ -74,15 +82,15 @@ var filterApp = new Vue({
   data: {
     courses: courses,
     selectedTopic: [],
-    selectedLocation: []
+    selectedPrice: []
   },
   computed: {
     topics: function () {
       // return an array of all the topics
       return [...new Set(this.courses.map(x => x.topic))];
     },
-    locations: function () {
-      return [...new Set(this.courses.map(x => x.location))];
+    prices: function () {
+      return [...new Set(this.courses.map(x => x.price))];
     }
   }
 });
@@ -91,21 +99,22 @@ var filterApp = new Vue({
 var courseApp = new Vue({
   el: "#course-loop",
   data: {
-    courses: courses
+    courses: courses,
+    search: ''
   },
   methods: {
     reset: function () {
       filterApp.selectedTopic = [];
-      filterApp.selectedLocation = [];
+      filterApp.selectedPrice = [];
     }
   },
   computed: {
     filteredCourses: function () {
       var topics = filterApp.selectedTopic,
-        locations = filterApp.selectedLocation;
+        prices = filterApp.selectedPrice.map(Number);
       return this.courses.filter(function (course) {
         var topicMatch = false,
-          locationMatch = false;
+          priceMatch = false;
         if (topics.length > 0) {
           if (topics.includes(course.topic)) {
             topicMatch = true;
@@ -113,18 +122,23 @@ var courseApp = new Vue({
         } else {
           topicMatch = true;
         }
-        if (locations.length > 0) {
-          if (locations.includes(course.location)) {
-            locationMatch = true;
+        if (prices.length > 0) {
+          if (prices.includes(course.price)) {
+            priceMatch = true;
           }
         } else {
-          locationMatch = true;
+          priceMatch = true;
         }
-        return topicMatch && locationMatch;
+        return topicMatch && priceMatch;
       });
-    }
+    },
+
+  filteredList: function () {
+    return this.filteredCourses.filter(course => {
+      return course.topic.toLowerCase().includes(this.search.toLowerCase())
+    })
   }
-});
+}});
 
 //Sign up Instance
 var signupApp = new Vue({
@@ -159,7 +173,7 @@ var signupApp = new Vue({
   }
 });
 
-//Log In Instance - finished
+//Log In Instance
 var logInApp = new Vue({
   el: "#login",
   data: {
