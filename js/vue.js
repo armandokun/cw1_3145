@@ -31,38 +31,34 @@ Vue.component("page-header", {
     </div>
     </div>
     `,
-    methods: {
-      logOut: function() {
-          users = JSON.parse(localStorage.getItem("users"));
-        if (users) {
-          if (
-            users.some(function (user) {
-              return user.on === true;
-            })
-          ) {
-            //takes an index of the user of users array and changes the state value to logged in
-            var index = users.findIndex(obj => obj.on === true);
-            users[index].on = false;
-            localStorage.setItem("users", JSON.stringify(users));
-            window.location.href="/index.html";
-            return;
-      }
-    }
-  }
-    },
-  computed: {
-    isOn: function () {
-      if (localStorage.getItem("users")) {
-        // 'users' is an array of objects
-        users = JSON.parse(localStorage.getItem("users"));
-      }
+  methods: {
+    logOut: function () {
+      users = JSON.parse(localStorage.getItem("users"));
       if (users) {
-        if (users.some(function (user) { return user.on === true })) {
-          return true;
+        if (
+          users.some(function (user) {
+            return user.on === true;
+          })
+        ) {
+          //takes an index of the user of users array and changes the state value to logged in
+          var index = users.findIndex(obj => obj.on === true);
+          users[index].on = false;
+          localStorage.setItem("users", JSON.stringify(users));
+          window.location.href = "/index.html";
+          return;
         }
       }
+    }
+  },
+  computed: {
+    isOn: function () {
+      users = JSON.parse(localStorage.getItem("users"))
+      if (users) {
+        if (users.some(function (user) { return user.on === true })) {return true;}
+      } else 
+      return false;
     },
-    userInfo: function() {
+    userInfo: function () {
       users = JSON.parse(localStorage.getItem("users"));
       var index = users.findIndex(obj => obj.on === true);
       return users[index];
@@ -72,7 +68,7 @@ Vue.component("page-header", {
 );
 
 //Header Instance
-new Vue({
+var headerApp = new Vue({
   el: "#header-template"
 });
 
@@ -106,9 +102,11 @@ var courseApp = new Vue({
     reset: function () {
       filterApp.selectedTopic = [];
       filterApp.selectedPrice = [];
+      this.search = '';
     }
   },
   computed: {
+    //filters when clicked on the filter
     filteredCourses: function () {
       var topics = filterApp.selectedTopic,
         prices = filterApp.selectedPrice.map(Number);
@@ -132,13 +130,14 @@ var courseApp = new Vue({
         return topicMatch && priceMatch;
       });
     },
-
-  filteredList: function () {
-    return this.filteredCourses.filter(course => {
-      return course.topic.toLowerCase().includes(this.search.toLowerCase())
-    })
+    //filters when searching for a topic
+    filteredList: function () {
+      return this.filteredCourses.filter(course => {
+        return course.topic.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   }
-}});
+});
 
 //Sign up Instance
 var signupApp = new Vue({
