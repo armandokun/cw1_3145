@@ -83,9 +83,23 @@
             <div id="course-loop">
                 <button v-on:click='reset'>reset</button>
                 <input placeholder="Search" type="text" v-model="search">
+                <select v-model="selected">
+                    <option disabled>Sort By:</option>
+                    <optgroup label="Topic">
+                        <option>A - Z</option>
+                        <option>Z - A</option>
+                    </optgroup>
+                    <optgroup label="Price">
+                        <option>Low - High</option>
+                        <option>High - Low</option>
+                    </optgroup>
+                    <optgroup label="Reviews">
+                        <option>5 & Others</option>
+                    </optgroup>
+                  </select>
                 <div id="courseList">
                     <h1>Course list</h1>
-                    <div v-for="course in filteredList" class="course">
+                    <div v-for="course in sortedArray" class="course">
                         <li v-for='(value, name) in course'>{{name}}: {{value}}</li>
                     </div>
                 </div>

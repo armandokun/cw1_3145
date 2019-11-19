@@ -96,13 +96,15 @@ var courseApp = new Vue({
   el: "#course-loop",
   data: {
     courses: courses,
-    search: ''
+    search: '',
+    selected: 'A - Z'
   },
   methods: {
     reset: function () {
       filterApp.selectedTopic = [];
       filterApp.selectedPrice = [];
       this.search = '';
+      this.selected = ''
     }
   },
   computed: {
@@ -135,6 +137,35 @@ var courseApp = new Vue({
       return this.filteredCourses.filter(course => {
         return course.topic.toLowerCase().includes(this.search.toLowerCase())
       })
+    },
+    //sorts through the search and filter that are above
+    sortedArray: function() {
+      //ascending order
+      function asc(a, b) {
+        if (a.topic < b.topic)
+          return -1;
+        if (a.topic > b.topic)
+          return 1;
+        return 0;
+      }
+
+      ascOrder = this.filteredList.sort(asc);
+
+      // low-high price order
+      function lhp(c, d) {
+        if (c.price < d.price)
+          return -1;
+        if (c.price > d.price)
+          return 1;
+        return 0;
+      }
+
+      switch(this.selected) {
+        case 'Z - A': return ascOrder.reverse(); 
+        case 'Low - High': return this.filteredList.sort(lhp);
+        case 'High - Low': return this.filteredList.sort(lhp).reverse();
+        default: return ascOrder;
+      }
     }
   }
 });
