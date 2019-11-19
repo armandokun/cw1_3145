@@ -21,13 +21,47 @@ Vue.component("page-header", {
     <img src="./img/header-logo.png" alt='Logo in the Header' id="headerLogo">
     <input placeholder="Search" type="text">
     <div id='button-left-alignment'>
-    <a class="button" href="#popup2">Log In</a>
-    <a class="button" href="#popup1">Sign In</a>
-    <button>Shopping Cart</button>
+    <a class="button" href="#popup2" v-if="!isOn">Log In</a>
+    <a class="button" href="#popup1" v-if="!isOn">Sign Up</a>
+    <button v-if="isOn" @click="logOut">Log Out</button>
+    <button v-if="isOn">Shopping Cart</button>
     </div>
     </div>
-    `
-});
+    `,
+    methods: {
+      logOut: function() {
+          users = JSON.parse(localStorage.getItem("users"));
+        if (users) {
+          if (
+            users.some(function (user) {
+              return user.on === true;
+            })
+          ) {
+            //takes an index of the user of users array and changes the state value to logged in
+            var index = users.findIndex(obj => obj.on === true);
+            users[index].on = false;
+            localStorage.setItem("users", JSON.stringify(users));
+            window.location.href="/index.html"
+            return;
+      }
+    }
+  }
+    },
+  computed: {
+    isOn: function () {
+      if (localStorage.getItem("users")) {
+        // 'users' is an array of objects
+        users = JSON.parse(localStorage.getItem("users"));
+      }
+      if (users) {
+        if (users.some(function (user) { return user.on === true })) {
+          return true;
+        }
+      }
+    }
+  }
+}
+);
 
 //Header Instance
 new Vue({
@@ -149,6 +183,7 @@ var logInApp = new Vue({
             return user.email === existingEmail && user.password === existingPassword;
           })
         ) {
+          //takes an index of the user of users array and changes the state value to logged in
           var index = users.findIndex(obj => obj.email === existingEmail && obj.password === existingPassword);
           users[index].on = true;
           localStorage.setItem("users", JSON.stringify(users));
