@@ -98,7 +98,8 @@ var signupApp = new Vue({
   data: {
     userType: "user",
     email: "",
-    password: ""
+    password: "",
+    on: false
   },
   methods: {
     onSubmit: function () {
@@ -110,18 +111,14 @@ var signupApp = new Vue({
         users = JSON.parse(localStorage.getItem("users"));
       }
       if (users) {
-        if (
-          users.some(function (user) {
-            return user.email === newEmail;
-          })
-        ) {
+        if (users.some(function (user) { return user.email === newEmail; })) {
           alert("Email already exists!");
           return;
         }
-        users.push({ type: this.userType, email: newEmail, password: this.password });
+        users.push({ type: this.userType, email: newEmail, password: this.password, on: this.on });
         localStorage.setItem("users", JSON.stringify(users));
       } else {
-        users = [{ type: this.userType, email: newEmail, password: this.password }];
+        users = [{ type: this.userType, email: newEmail, password: this.password, on: this.on }];
         localStorage.setItem("users", JSON.stringify(users));
       }
     }
@@ -133,7 +130,8 @@ var logInApp = new Vue({
   el: "#login",
   data: {
     email: "",
-    password: ""
+    password: "",
+    on: Boolean
   },
   methods: {
     onSubmit: function () {
@@ -151,10 +149,12 @@ var logInApp = new Vue({
             return user.email === existingEmail && user.password === existingPassword;
           })
         ) {
-          alert("Congrats!");
+          var index = users.findIndex(obj => obj.email === existingEmail && obj.password === existingPassword);
+          users[index].on = true;
+          localStorage.setItem("users", JSON.stringify(users));
           return;
-        }
-        alert("The email or password is incorrect");
+        } else
+          alert("The email or password is incorrect");
       }
     }
   }
