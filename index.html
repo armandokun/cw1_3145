@@ -99,7 +99,7 @@
                   </select>
                 <div id="courseList">
                     <h1>Course list</h1>
-                    <div v-for="course in sortedArray" class="course">
+                    <div v-for="course in sortedArray" class="course" :key="course.id">
                         <li v-for='(value, name) in course'>{{name}}: {{value}}</li>
                     </div>
                 </div>

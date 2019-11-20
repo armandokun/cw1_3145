@@ -10,7 +10,8 @@ var courses = [
   { topic: "english", location: "brent cross", price: 90 },
   { topic: "english", location: "golders green", price: 130 },
   { topic: "piano", location: "hendon", price: 120 },
-  { topic: "piano", location: "golders green", price: 140 }
+  { topic: "piano", location: "golders green", price: 140 },
+  { topic: "sports club", location: "golders green", price: 200 }
 ];
 
 //Header Component
@@ -25,8 +26,10 @@ Vue.component("page-header", {
     </div>
     <div v-else>
     <p>email: {{ userInfo.email }}</p>
-    <button v-if="isOn" @click="logOut">Log Out</button>
-    <button v-if="isOn">Shopping Cart</button>
+    <div v-if="userInfo.type === 'provider' && pathUrl == '/index.html'">
+    <button @click="addActivity">Add Class or Activity</button>
+    </div>
+    <button @click="logOut">Log Out</button>
     </div>
     </div>
     </div>
@@ -48,24 +51,29 @@ Vue.component("page-header", {
           return;
         }
       }
+    },
+    addActivity: function () {
+      if (this.userInfo.type === "provider") window.location.href = "/provider.html";
     }
   },
   computed: {
     isOn: function () {
       users = JSON.parse(localStorage.getItem("users"))
       if (users) {
-        if (users.some(function (user) { return user.on === true })) {return true;}
-      } else 
-      return false;
+        if (users.some(function (user) { return user.on === true })) { return true; }
+      } else
+        return false;
     },
     userInfo: function () {
       users = JSON.parse(localStorage.getItem("users"));
       var index = users.findIndex(obj => obj.on === true);
       return users[index];
+    },
+    pathUrl: function () {
+      return window.location.pathname;
     }
   }
-}
-);
+});
 
 //Header Instance
 var headerApp = new Vue({
@@ -104,7 +112,7 @@ var courseApp = new Vue({
       filterApp.selectedTopic = [];
       filterApp.selectedPrice = [];
       this.search = '';
-      this.selected = ''
+      this.selected = 'A - Z'
     }
   },
   computed: {
@@ -139,7 +147,7 @@ var courseApp = new Vue({
       })
     },
     //sorts through the search and filter that are above
-    sortedArray: function() {
+    sortedArray: function () {
       //ascending order
       function asc(a, b) {
         if (a.topic < b.topic)
@@ -160,8 +168,8 @@ var courseApp = new Vue({
         return 0;
       }
 
-      switch(this.selected) {
-        case 'Z - A': return ascOrder.reverse(); 
+      switch (this.selected) {
+        case 'Z - A': return ascOrder.reverse();
         case 'Low - High': return this.filteredList.sort(lhp);
         case 'High - Low': return this.filteredList.sort(lhp).reverse();
         default: return ascOrder;
@@ -235,6 +243,36 @@ var logInApp = new Vue({
         } else
           alert("The email or password is incorrect");
       }
+    }
+  }
+});
+
+// Provider Preview Instance
+var providerApp = new Vue({
+  el: '#provider-preview',
+  data: {
+    coursesArray: courses,
+    topic: 'something',
+    location: 'yeye',
+    price: 0,
+    about: '',
+    courses: []
+  },
+  methods: {
+    addClass: function () {
+      var coursesArr = [{ topic: this.topic, location: this.location, price: this.price, about: this.about }];
+      localStorage.setItem("courses", JSON.stringify(coursesArr));
+    }
+  },
+  mounted() {
+    if (localStorage.courses) {
+      this.courses = localStorage.courses;
+    }
+  },
+  watch: {
+    courses(newValue) {
+      c = JSON.parse(localStorage.courses);
+      c[0].topic = newValue;
     }
   }
 });
