@@ -1,47 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
     <script src="./js/vue.js" defer></script>
+    <script src="./js/provider.js" defer></script>
     <title>cw1_3145 - Provider</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <header>
-            <div id="header-template">
-                <page-header></page-header>
-            </div>
-        </header>
-        <aside>
-        </aside>
-        <main>
-            <form id="provider-preview" @submit="addClass">
-                <div>
-                    <label for="topic">Topic</label>
-                    <input id="topic" type="text" name="topic" value="topic" v-model="topic">
-                </div>
-                <div>
-                    <label for="location">Location</label>
-                    <input id="location" type="text" name="location" value="location" v-model="location">
-                </div>
-                <div>
-                    <label for="price">Price</label>
-                    <input id="price" type="number" name="price" v-model="price">
-                </div>
-                <div>
-                    <label for="about">About</label>
-                    <textarea id="about" name="about" value="about" v-model="about" placeholder="Time and length, i.e., when is the class/activity (such as 4pm every weekdays) and how long it is (such as 1 hour)."></textarea>
-                </div>
-                <button type="submit">Add Class or Activity</button>
-            </form>
-        </main>
+      <header>
+        <div id="header-template">
+          <page-header></page-header>
+        </div>
+      </header>
+      <aside></aside>
+      <main>
+        <form id="provider-add" @submit="addClass">
+          <div>
+            <label for="topic">Topic</label>
+            <input
+              id="topic"
+              required
+              type="text"
+              name="topic"
+              value="topic"
+              v-model="topic"
+            />
+          </div>
+          <div>
+            <label for="location">Location</label>
+            <input
+              id="location"
+              required
+              type="text"
+              name="location"
+              value="location"
+              v-model="location"
+            />
+          </div>
+          <div>
+            <label for="price">Price</label>
+            <input
+              id="price"
+              required
+              type="number"
+              name="price"
+              v-model="price"
+            />
+          </div>
+          <div>
+            <label for="about">About</label>
+            <textarea
+              id="about"
+              name="about"
+              value="about"
+              v-model="about"
+              placeholder="Time and length, i.e., when is the class/activity (such as 4pm every weekdays) and how long it is (such as 1 hour)."
+            ></textarea>
+          </div>
+          <button type="submit">Add Class or Activity</button>
+        </form>
+        <div id="provider-view">
+             <div v-for="course in filterCoursesByEmail" class="course">
+                 <li v-for="(name, value) in course">{{value}}: {{name}}</li>
+             </div>
+        </div>
+      </main>
     </div>
-</body>
-
+  </body>
 </html>

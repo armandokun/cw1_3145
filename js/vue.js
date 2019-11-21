@@ -23,14 +23,14 @@ if (!localStorage.getItem("courses")) { localStorage.setItem("courses", JSON.str
 Vue.component("page-header", {
   template: `
     <div class="page-header-template">
-    <img src="./img/header-logo.png" alt='Logo in the Header' id="headerLogo">
+    <a href="/index.html"><img src="./img/header-logo.png" alt='Logo in the Header' id="headerLogo"></a>
     <div id='button-left-alignment'>
     <div v-if=!isOn>
     <a class="button" href="#popup2">Log In</a>
     <a class="button" href="#popup1">Sign Up</a>
     </div>
     <div v-else>
-    <p>email: {{ userInfo.email }}</p>
+    <p>email:</p><p id="userEmail" ref="userEmail">{{ userInfo.email }}</p>
     <div v-if="userInfo.type === 'provider' && pathUrl == '/index.html'">
     <button @click="addActivity">Add Class or Activity</button>
     </div>
@@ -178,33 +178,6 @@ var courseApp = new Vue({
         case 'Low - High': return this.filteredList.sort(lhp);
         case 'High - Low': return this.filteredList.sort(lhp).reverse();
         default: return ascOrder;
-      }
-    }
-  }
-});
-
-// Provider Preview Instance
-var providerApp = new Vue({
-  el: '#provider-preview',
-  data: {
-    coursesArray: courses,
-    topic: '',
-    location: '',
-    price: null,
-    about: ''
-  },
-  methods: {
-    addClass: function () {
-      courses = "";
-      if (localStorage.getItem("courses")) {
-        courses = JSON.parse(localStorage.getItem("courses"));
-      }
-      if (courses) {
-        courses.push({ topic: this.topic, location: this.location, price: this.price, about: this.about });
-        localStorage.setItem("courses", JSON.stringify(courses));
-      } else {
-        courses = [{ topic: this.topic, location: this.location, price: this.price, about: this.about }];
-        localStorage.setItem("courses", JSON.stringify(courses));
       }
     }
   }
