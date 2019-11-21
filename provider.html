@@ -18,9 +18,10 @@
                 <page-header></page-header>
             </div>
         </header>
-        <aside></aside>
+        <aside>
+        </aside>
         <main>
-            <form id="provider-preview" @submit.prevent="addClass">
+            <form id="provider-preview" @submit="addClass">
                 <div>
                     <label for="topic">Topic</label>
                     <input id="topic" type="text" name="topic" value="topic" v-model="topic">
@@ -31,14 +32,13 @@
                 </div>
                 <div>
                     <label for="price">Price</label>
-                    <input id="price" type="text" name="price" value="price" v-model.number="price">
+                    <input id="price" type="number" name="price" v-model="price">
                 </div>
                 <div>
                     <label for="about">About</label>
-                    <textarea id="about" name="about" value="about" v-model="about" placeholder="Time and length, i.e., when is the class/activity (such as 4pm every weekdays) and
-                        how long it is (such as 1 hour)."></textarea>
+                    <textarea id="about" name="about" value="about" v-model="about" placeholder="Time and length, i.e., when is the class/activity (such as 4pm every weekdays) and how long it is (such as 1 hour)."></textarea>
                 </div>
-                <button type="submit">submit</button>
+                <button type="submit">Add Class or Activity</button>
             </form>
         </main>
     </div>
