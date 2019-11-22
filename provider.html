@@ -18,7 +18,9 @@
           <page-header></page-header>
         </div>
       </header>
-      <aside></aside>
+      <aside>
+          <div id="filter" v-show="false"></div>
+      </aside>
       <main>
         <form id="provider-add" @submit="addClass">
           <div>
@@ -71,6 +73,7 @@
                  <button @click="editClass">Edit</button><button @click="removeClass">Remove</button>
              </div>
         </div>
+        <div id="course-loop" v-show="false"></div>
       </main>
     </div>
   </body>
