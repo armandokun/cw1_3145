@@ -10,7 +10,6 @@
     <script src="./js/index.js" defer></script>
     <title>cw1_3145</title>
   </head>
-
   <body>
     <div class="container">
       <header>
@@ -47,13 +46,13 @@
                 </div>
                 <br /><br />
                 <label for="email">email: </label>
-                <input required type="email" id="email" v-model="email" />
+                <input required type="email" id="SignUpEmail" v-model="email" />
                 <br /><br />
                 <label for="password">password: </label>
                 <input
                   required
                   type="password"
-                  id="password"
+                  id="SignUppassword"
                   v-model="password"
                 />
                 <br /><br />
@@ -121,7 +120,11 @@
           </select>
           <div id="courseList">
             <h1>Course list</h1>
-            <div v-for="course in sortedArray" class="course" :key="course.id">
+            <div
+              v-for="(course, index) in sortedArray"
+              class="course"
+              :id="index"
+            >
               <li v-for="(value, name) in course">{{name}}: {{value}}</li>
             </div>
           </div>

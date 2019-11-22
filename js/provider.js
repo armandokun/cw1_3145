@@ -14,9 +14,8 @@ var courses = [
   ];
   
   //creates localStorage version of the courses array
-  if (!localStorage.getItem("courses")) { localStorage.setItem("courses", JSON.stringify(courses)) } else {
-    courses = JSON.parse(localStorage.getItem("courses"))
-  };
+  !localStorage.getItem("courses") ? localStorage.setItem("courses", JSON.stringify(courses)) : 
+  courses = JSON.parse(localStorage.getItem("courses"))
 
 // Provider Preview Instance
 var providerApp = new Vue({
@@ -45,13 +44,16 @@ var providerApp = new Vue({
   });
   
   var providerView = new Vue({
-    el: '#provider-view',
+    el: '#providerView',
     data: {
       courses: courses
     },
     computed: {
       filterCoursesByEmail: function () {
         return this.courses.filter(this.checkUserInCourses);
+      },
+      isEmpty: function () {
+
       }
     },
       methods: {
@@ -59,6 +61,13 @@ var providerApp = new Vue({
           if (course.user === document.getElementById("userEmail").innerText) {
             return course;
           }
+        },
+        removeClass: function (index) {
+            this.filterCoursesByEmail.splice(index, 1);
+            return;
+        },
+        editClass: function () {
+
         }
       }
   })

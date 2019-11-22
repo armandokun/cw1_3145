@@ -30,7 +30,7 @@ Vue.component("page-header", {
     <a class="button" href="#popup1">Sign Up</a>
     </div>
     <div v-else>
-    <p>email:</p><p id="userEmail" ref="userEmail">{{ userInfo.email }}</p>
+    <p>email: </p><p id="userEmail">{{ userInfo.email }}</p>
     <div v-if="userInfo.type === 'provider' && pathUrl == '/index.html'">
     <button @click="addActivity">Add Class or Activity</button>
     </div>
