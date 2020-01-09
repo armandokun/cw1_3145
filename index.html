@@ -16,70 +16,77 @@
         <div id="header-template">
           <page-header></page-header>
         </div>
-        <div id="popup1" class="overlay">
-          <div class="popup">
-            <h2>Sign Up</h2>
-            <a class="close" href="#">&times;</a>
-            <div class="content">
-              <form id="signup" @submit="onSubmit" action="/#popup2">
-                <p>type:</p>
-                <div>
-                  <input
-                    id="user"
-                    type="radio"
-                    name="userType"
-                    value="user"
-                    v-model="userType"
-                  />
-                  <label for="user">User</label>
-                </div>
+        <div id="userForm">
+          <div id="popup1" class="overlay">
+            <div class="popup">
+              <h2>Sign Up</h2>
+              <a class="close" href="#">&times;</a>
+              <div class="content">
+                <form id="signup" @submit="signUp" action="/#popup2">
+                  <p>type:</p>
+                  <div>
+                    <input
+                      id="user"
+                      type="radio"
+                      name="userType"
+                      value="user"
+                      v-model="userType"
+                    />
+                    <label for="user">User</label>
+                  </div>
 
-                <div>
+                  <div>
+                    <input
+                      id="provider"
+                      type="radio"
+                      name="userType"
+                      value="provider"
+                      v-model="userType"
+                    />
+                    <label for="provider">Provider</label>
+                  </div>
+                  <br /><br />
+                  <label for="email">email: </label>
                   <input
-                    id="provider"
-                    type="radio"
-                    name="userType"
-                    value="provider"
-                    v-model="userType"
+                    required
+                    type="email"
+                    id="SignUpEmail"
+                    v-model="email"
                   />
-                  <label for="provider">Provider</label>
-                </div>
-                <br /><br />
-                <label for="email">email: </label>
-                <input required type="email" id="SignUpEmail" v-model="email" />
-                <br /><br />
-                <label for="password">password: </label>
-                <input
-                  required
-                  type="password"
-                  id="SignUppassword"
-                  v-model="password"
-                />
-                <br /><br />
-                <button type="submit">submit</button>
-              </form>
+                  <br /><br />
+                  <label for="password">password: </label>
+                  <input
+                    required
+                    type="password"
+                    id="SignUppassword"
+                    v-model="password"
+                  />
+                  <br /><br />
+                  <button type="submit">submit</button>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-        <div id="popup2" class="overlay">
-          <div class="popup">
-            <h2>Log In</h2>
-            <a class="close" href="#">&times;</a>
-            <div class="content">
-              <form id="login" @submit="onSubmit" action="/index.html">
-                <label for="email">email: </label>
-                <input required type="email" id="email" v-model="email" />
-                <br /><br />
-                <label for="password">password: </label>
-                <input
-                  required
-                  type="password"
-                  id="password"
-                  v-model="password"
-                />
-                <br /><br />
-                <button type="submit">submit</button>
-              </form>
+          <div id="popup2" class="overlay">
+            <div class="popup">
+              <h2>Log In</h2>
+              <a class="close" href="#">&times;</a>
+              <div class="content">
+                <form id="login" @submit="logIn" action="/index.html">
+                  <label for="email">email: </label>
+                  <input required type="email" id="email" v-model="email" />
+                  <br /><br />
+                  <label for="password">password: </label>
+                  <input
+                    required
+                    type="password"
+                    id="password"
+                    v-model="password"
+                  />
+                  <br /><br />
+                  <button type="submit">submit</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
